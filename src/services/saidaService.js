@@ -1,9 +1,15 @@
+const Extrato = require("../models/Extrato");
 const Saida = require("../models/Saida");
 
 const SaidaService = {
     create : async (data) => {
         try {
-            return await Saida.create(data);
+
+            const saida = await Saida.create(data);
+            await Extrato.create({
+                saida_id : saida.id
+            })
+            // return await Saida.create(data);
         } catch (error) {
             throw new Error("Erro ao tentar criar a saida");
         }

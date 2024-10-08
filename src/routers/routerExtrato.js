@@ -1,15 +1,21 @@
 const {Router} = require('express');
+const ExtratoController = require('../controllers/extratoController');
 const router = Router();
 
 
 // Adicionar algo ao o extrato
-router.post('/',);
+router.post('/', ExtratoController.create);
 
 // Chamar o extrato
-router.get('/',);
+router.get('/', ExtratoController.getAll);
 
 // Chamar o extrato unico
-router.get('/:id',);
+// router.get('/:id',);
+
+// Atualizar algo do extrato
 
 // Deletar o extrato
-router.delete('/',);
+router.delete('/', ExtratoController.delete);
+
+
+module.exports = router;

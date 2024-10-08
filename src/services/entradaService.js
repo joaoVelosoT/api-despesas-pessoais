@@ -1,12 +1,16 @@
 const Entrada = require("../models/entrada");
+const Extrato = require("../models/Extrato");
 
 
 const EntradaService = {
     create : async (data) => {
         try {
-            const entrada = await data;
-            return Entrada.create(entrada);
-
+            // const entrada = await data;
+            // return Entrada.create(entrada);
+            const entrada = await Entrada.create(data);
+            await Extrato.create({
+                entrada_id : entrada.id
+            })
         } catch (error) {
             throw new Error('Ocorreu um erro ao criar a entrada')
         }
