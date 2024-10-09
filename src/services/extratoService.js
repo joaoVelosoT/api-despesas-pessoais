@@ -1,4 +1,4 @@
-const Entrada = require("../models/entrada");
+const Entrada = require("../models/Transicao");
 const Extrato = require("../models/Extrato");
 
 const ExtratoService = {
@@ -14,10 +14,18 @@ const ExtratoService = {
         try {
 
             const extrato = await Extrato.findAll({
-                include : [{model : Entrada}]
+                attributes : ['id', 'createdAt'],
+                include : [{
+                    model : Entrada,
+                    attributes : ['valor','id']
+                }],
             });
             
             // console.log("teste",extrato)
+
+            extrato.forEach(itens => {
+                console.log("item1",itens.dataValues)
+            })
             return extrato
 
         } catch (error) {

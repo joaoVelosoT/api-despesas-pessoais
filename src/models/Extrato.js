@@ -1,6 +1,6 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../config/database');
-const Entrada = require('./entrada');
+const Entrada = require('./Transicao');
 const Saida = require('./Saida');
 
 const Extrato = sequelize.define('extrato', {

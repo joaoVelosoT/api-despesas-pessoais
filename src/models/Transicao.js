@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../config/database');
 
-const Entrada = sequelize.define("entrada", {
+const Transicao = sequelize.define("transicao", {
     valor : {
         type : DataTypes.DOUBLE,
         allowNull : false
@@ -9,7 +9,11 @@ const Entrada = sequelize.define("entrada", {
     descricao : {
         type : DataTypes.STRING(255)
     },
+    tipo : {
+        type : DataTypes.STRING,
+        allowNull : false
+    }
 })
 
 
-module.exports = Entrada;
+module.exports = Transicao;
