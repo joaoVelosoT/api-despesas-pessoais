@@ -1,11 +1,10 @@
 const {Router} = require('express');
 const router = Router();
-const routerEntrada = require('./routerEntrada');
-const routerSaida = require('./routerSaida');
-const routerExtrato = require('./routerExtrato');
+// const routerExtrato = require('./routerExtrato');
+const routerTransicao = require('./routerTransicao');
 
-router.use('/entrada', routerEntrada);
-router.use('/saida', routerSaida);
-router.use('/extrato',routerExtrato );
+// router.use('/extrato',routerExtrato );
+router.use('/transicao', routerTransicao);
+
 
 module.exports = router;
