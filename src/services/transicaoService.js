@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Transicao = require("../models/Transicao");
 
 const TransicaoService = {
@@ -64,6 +65,61 @@ const TransicaoService = {
             throw new Error("Erro ao deletar as transicoes");
         }
     },
+    total : async () => {
+        try {
+
+            let total = 0;
+
+            const transicoes = await Transicao.findAll()
+
+            transicoes.forEach(transacao => {
+                // let entrada = 0
+                // let saida = 0
+                if(transacao.tipo === "Entrada"){
+                    total += transacao.valor
+                }else {
+                    total -= transacao.valor
+                }
+                // console.log(transacao.tipo);
+                
+            })
+
+            return total
+
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro ao mostrar o total");
+        }
+    },
+    totalEntradas : async () => {
+        try {
+            const transicoes = await Transicao.findAll({where : {tipo : "Entrada"}})
+            let totalEntradas = 0;
+
+            transicoes.forEach(entradas => {
+                totalEntradas += entradas.valor
+            })
+
+            return totalEntradas
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro ao mostrar o total de entradas");
+        }
+    },
+    totalSaidas : async () => {
+        try {
+            const transicoes = await Transicao.findAll({ where : {tipo : "Saida"}});
+            let totalSaidas = 0;
+            transicoes.forEach(saidas => {
+                totalSaidas += saidas.valor
+            })
+            return totalSaidas
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro ao mostrar o total de saidas");
+            
+        }
+    }
 }
 
 module.exports = TransicaoService;

@@ -115,6 +115,52 @@ const TransicaoController = {
             })
         }
     },
+    total : async (req,res) => {
+        try {
+            const total = await TransicaoService.total();
+            return res.status(200).json({
+                msg : "Total",
+                total
+            })
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                msg : "Erro ao listar o total"
+            })
+        }
+    },
+    totalEntradas : async(req,res) => {
+        try {
+
+          const totalEntradas = await TransicaoService.totalEntradas();
+
+          return res.status(200).json({
+            msg : "Total de entradas",
+            totalEntradas
+          })  
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                msg : "Erro ao listar o total de entradas"
+            })
+        }
+    },
+    totalSaidas : async (req,res) => {
+        try {
+            const totalSaidas = await TransicaoService.totalSaidas();
+
+            return res.status(200).json({
+                msg : "Total de saidas",
+                totalSaidas
+            })
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                msg : "Erro ao listar o total de saidas"
+            })
+        }
+    }
+
     
 }
 
