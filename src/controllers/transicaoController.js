@@ -29,7 +29,8 @@ const TransicaoController = {
     getAll : async (req,res) => {
         
         try {
-            const transicoes = await TransicaoService.getAll();
+
+            const transicoes = await TransicaoService.getAll(req.user.id);
 
             return res.status(200).json({
                 transicoes
@@ -46,7 +47,8 @@ const TransicaoController = {
         try {
             const {id} = req.params;
 
-            const transicao = await TransicaoService.getOne(id);
+            const user_id = req.user.id;
+            const transicao = await TransicaoService.getOne(id, user_id);
 
             if(!transicao){
                 return res.status(400).json({
@@ -68,14 +70,19 @@ const TransicaoController = {
     update : async (req,res) => {
         try {
             const {id} = req.params;
+            
+            const user_id = req.user.id;
+            console.log(user_id);
 
             const data = {
                 valor : req.body.valor,
                 descricao : req.body.descricao,
-                tipo : req.body.tipo  
+                tipo : req.body.tipo,
+                user_id : req.user.id,
+
               }
 
-            const transicao = await TransicaoService.update(id, data);
+            const transicao = await TransicaoService.update(id, data, user_id);
 
             if(!transicao){
                 return res.status(400).json({
@@ -121,7 +128,9 @@ const TransicaoController = {
     },
     total : async (req,res) => {
         try {
-            const total = await TransicaoService.total();
+
+            const total = await TransicaoService.total(req.user.id);
+            
             return res.status(200).json({
                 msg : "Total",
                 total
@@ -136,7 +145,7 @@ const TransicaoController = {
     totalEntradas : async(req,res) => {
         try {
 
-          const totalEntradas = await TransicaoService.totalEntradas();
+          const totalEntradas = await TransicaoService.totalEntradas(req.user.id);
 
           return res.status(200).json({
             msg : "Total de entradas",
@@ -151,7 +160,7 @@ const TransicaoController = {
     },
     totalSaidas : async (req,res) => {
         try {
-            const totalSaidas = await TransicaoService.totalSaidas();
+            const totalSaidas = await TransicaoService.totalSaidas(req.user.id);
 
             return res.status(200).json({
                 msg : "Total de saidas",

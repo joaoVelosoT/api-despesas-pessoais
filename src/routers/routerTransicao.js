@@ -3,15 +3,15 @@ const TransicaoController = require('../controllers/transicaoController');
 const authenticateToken = require('../middlewares/authenticateToken');
 const router = Router();
 
-router.get('/total',TransicaoController.total);
-router.get('/entradas',TransicaoController.totalEntradas);
-router.get('/saidas', TransicaoController.totalSaidas );
+router.get('/total',authenticateToken, TransicaoController.total);
+router.get('/entradas',authenticateToken, TransicaoController.totalEntradas);
+router.get('/saidas', authenticateToken, TransicaoController.totalSaidas );
 
 router.post('/',authenticateToken, TransicaoController.create);
-router.get('/', TransicaoController.getAll);
-router.get('/:id', TransicaoController.getOne);
-router.put('/:id', TransicaoController.update);
-router.delete('/:id', TransicaoController.delete);
+router.get('/', authenticateToken, TransicaoController.getAll);
+router.get('/:id',authenticateToken, TransicaoController.getOne);
+router.put('/:id', authenticateToken, TransicaoController.update);
+router.delete('/:id', authenticateToken, TransicaoController.delete);
 
 
 module.exports = router;
