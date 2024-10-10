@@ -11,6 +11,12 @@ const UserController = {
 
             const user = await UserService.create(data);
 
+            if(!user){
+                return res.status(400).json({
+                    msg : "Já existe esse email"
+                })
+            }
+
             return res.status(200).json({
                 msg : "User criado com sucesso",
                 user

@@ -3,7 +3,10 @@ const User = require("../models/User");
 const UserService = {
     create : async(data) => {
         try {
-
+            const existeUser = await User.findOne({ where : {email : data.email}});
+            if(existeUser){
+                return null;
+            }
             return await User.create(data);
 
         } catch (error) {
