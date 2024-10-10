@@ -123,9 +123,14 @@ const TransicaoService = {
             throw new Error("Erro ao mostrar o total de entradas");
         }
     },
-    totalSaidas : async () => {
+    totalSaidas : async (user_id) => {
         try {
-            const transicoes = await Transicao.findAll({ where : {tipo : "Saida"}});
+            const transicoes = await Transicao.findAll({ 
+                where : {
+                    tipo : "Saida",
+                    user_id : user_id,
+                }
+            });
             let totalSaidas = 0;
             transicoes.forEach(saidas => {
                 totalSaidas += saidas.valor
