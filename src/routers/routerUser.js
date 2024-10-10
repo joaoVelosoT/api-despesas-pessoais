@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const UserController = require('../controllers/userController');
+const authenticateToken = require('../middlewares/authenticateToken');
 const router = Router();
 
 
@@ -9,5 +10,7 @@ router.get('/:id',UserController.getOne);
 router.put('/:id', UserController.update);
 router.delete('/:id', UserController.delete);
 
+
+router.post('/login', UserController.login);
 
 module.exports = router;

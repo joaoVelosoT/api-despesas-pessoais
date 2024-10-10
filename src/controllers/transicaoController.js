@@ -3,10 +3,14 @@ const TransicaoService = require("../services/transicaoService");
 const TransicaoController = {
     create : async (req,res) => {
         try {
+
+            console.log(req.user);
+
             const data = {
               valor : req.body.valor,
               descricao : req.body.descricao,
-              tipo : req.body.tipo  
+              tipo : req.body.tipo ,
+              user_id : req.user.id,
             }
 
             const transicao = await TransicaoService.create(data);

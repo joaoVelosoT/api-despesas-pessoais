@@ -117,6 +117,32 @@ const UserController = {
                 msg : "Erro ao deletar usuario"
             })
         }
+    },
+    login : async (req,res) => {
+        try {
+            const data = {
+                email : req.body.email,
+                senha : req.body.senha
+            }
+
+            const user = await UserService.login(data);
+
+            if(!user){
+                return res.status(400).json({
+                    msg : "Login não encontrado"
+                })
+            }
+            
+            return res.status(200).json({
+                msg : "Login bem sucedido",
+                user,
+            })
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                msg : "Erro ao fazer login"
+            })
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const jwt = require('jsonwebtoken');
 
 const UserService = {
     create : async(data) => {
@@ -61,6 +62,31 @@ const UserService = {
         } catch (error) {
             console.error(error);
             throw new Error("Erro ao deletar user");
+        }
+    },
+    login : async (data) => {
+        try {
+            const user = await User.findOne({
+                where : {
+                    email : data.email,
+                    senha : data.senha
+                }
+            });
+
+            if(!user){
+                return null
+            }
+            const token = jwt.sign({
+                id : user.id,
+                nome : user.nome
+            }, process.env.SECRET, { expiresIn : "1h"});
+
+            return token
+
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro ao fazer login");
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../config/database');
+const User = require('./User');
 
 const Transicao = sequelize.define("transicao", {
     valor : {
@@ -12,8 +13,24 @@ const Transicao = sequelize.define("transicao", {
     tipo : {
         type : DataTypes.STRING,
         allowNull : false
-    }
+    },
+    // user_id : {
+    //     type : DataTypes.INTEGER,
+    //     references : {
+    //         model
+    //     }
+    //     onDelete : 'CASCADE',
+    //     allowNull : false
+    // }
 })
+
+Transicao.belongsTo(User, {
+    foreignKey : 'user_id',
+    onDelete : 'CASCADE',
+    allowNull : false
+})
+
+
 
 
 module.exports = Transicao;
