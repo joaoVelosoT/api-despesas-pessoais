@@ -32,7 +32,7 @@ form.addEventListener('submit', async (e) => {
         // Aqui vai ser o fetch
     const response = await fetch('http://localhost:3000/user/', {
         method : 'POST',
-        headers : {},
+        headers: {"Content-type": "application/json; charset=UTF-8"},
         body : data
     })
 
