@@ -29,6 +29,12 @@ form.addEventListener('submit', async (e) => {
 
     const json = await response.json();
     // if(json.)
+
+    if(json.msg === "Login bem sucedido"){
+        sessionStorage.setItem("token", json.user)
+        return window.location.href = '../tela-inicial/telaInicial.html'
+    }
+
     msgError.textContent = json.msg
     msgError.style.display = "block"
     console.log(json)
