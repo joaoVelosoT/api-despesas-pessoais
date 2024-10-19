@@ -80,22 +80,27 @@ const TransicaoService = {
     total : async (id) => {
         try {
 
-            let total = 0;
+            let entradas = 0;
+            let saidas = 0;
 
             const transicoes = await Transicao.findAll({where : {user_id : id}});
 
             transicoes.forEach(transacao => {
                 // let entrada = 0
                 // let saida = 0
-                if(transacao.tipo === "Entrada"){
-                    total += transacao.valor
+                if(transacao.tipo === "entrada"){
+                    entradas += transacao.valor
                 }else {
-                    total -= transacao.valor
+                    saidas += transacao.valor
                 }
                 // console.log(transacao.tipo);
                 
             })
 
+            let total = entradas - saidas;
+
+            console.log("entradas", entradas);
+            console.log("saidas", saidas);
             return total
 
         } catch (error) {

@@ -172,4 +172,10 @@ button:hover {
 
 
 
-/* Mantém o restante do código como estava */
+.error-message {
+    color: #e53e3e;
+    font-size: 20px;
+    margin-top: 10px;
+    display: none; 
+}
+

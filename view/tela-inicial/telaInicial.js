@@ -31,6 +31,7 @@ const saldoTotal = async () => {
 
     const json = await response.json();
     saldoTotal.innerText = `R$${json.total}`;
+    // console.log(json.total)
   } catch (error) {
     console.error(error);
   }
@@ -72,7 +73,71 @@ const totalSaidas = async () => {
     }
 };
 
+const transacao = async () => {
+  const valor = document.getElementById("valor");
+  const descricao = document.getElementById("descricao");
+  const tipo = document.getElementById("tipo");
+  const form = document.getElementById("transaction-form");
+  const msgError = document.getElementsByClassName("error-message")[0];
 
+
+  form.addEventListener('submit', async(e) => {
+    e.preventDefault();
+
+    if(!valor.value || !descricao.value || !tipo.value){
+      msgError.textContent = "Envie todos os dados !"
+      msgError.style.display = "block"
+      return 
+    }
+
+    if(valor.value < 0){
+      msgError.textContent = "O valor não pode ser negativo"
+      msgError.style.display = "block"
+      return 
+    }
+
+    msgError.textContent = "";
+    msgError.style.display = "none";
+    
+    const data = JSON.stringify({
+      valor : valor.value,
+      descricao : descricao.value,
+      tipo : tipo.value
+    })
+
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await fetch('http://localhost:3000/transicao/', {
+        method : 'POST',
+        headers: {
+           Authorization: `${token}`,
+           "Content-Type": "application/json; charset=UTF-8"
+          },
+        body : data
+      })
+
+      const json = await response.json();
+
+      saldoTotal();
+      totalEntradas();
+      totalSaidas();
+      alert("Transação feita com sucesso !")
+      valor.value = "";
+      descricao.value = "";
+      
+    } catch (error) {
+      console.error(error);
+    }
+
+
+
+
+  })
+}
+
+
+
+transacao();
 logout();
 saldoTotal();
 totalEntradas();
