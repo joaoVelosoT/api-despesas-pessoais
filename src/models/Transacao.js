@@ -2,7 +2,7 @@ const {DataTypes} = require('sequelize');
 const sequelize = require('../config/database');
 const User = require('./User');
 
-const Transicao = sequelize.define("transicao", {
+const Transacao = sequelize.define("transacao", {
     valor : {
         type : DataTypes.DOUBLE,
         allowNull : false
@@ -24,7 +24,7 @@ const Transicao = sequelize.define("transicao", {
     // }
 })
 
-Transicao.belongsTo(User, {
+Transacao.belongsTo(User, {
     foreignKey : 'user_id',
     onDelete : 'CASCADE',
     allowNull : false
@@ -33,4 +33,4 @@ Transicao.belongsTo(User, {
 
 
 
-module.exports = Transicao;
+module.exports = Transacao;

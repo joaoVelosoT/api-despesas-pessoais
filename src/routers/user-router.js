@@ -1,11 +1,11 @@
 const {Router} = require('express');
-const UserController = require('../controllers/userController');
-const authenticateToken = require('../middlewares/authenticateToken');
-const validateUser = require('../middlewares/validateUser');
+const UserController = require('../controllers/user-controller');
+const TokenAuthenticate = require('../middlewares/token-authenticate');
+const UserValidate = require('../middlewares/user-validate');
 const router = Router();
 
 
-router.post('/', validateUser, UserController.create);
+router.post('/', UserValidate, UserController.create);
 router.get('/', UserController.getAll);
 router.get('/:id',UserController.getOne);
 router.put('/:id', UserController.update);

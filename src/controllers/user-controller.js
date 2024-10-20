@@ -3,8 +3,7 @@ const UserService = require("../services/userService");
 const UserController = {
     create : async (req,res) => {
         try {
-            console.log("create controller")
-            console.log(req.body)
+
             const data = {
                 nome : req.body.nome,
                 email : req.body.email,

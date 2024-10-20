@@ -3,12 +3,18 @@ const express = require('express');
 const sequelize = require('./config/database');
 const router = require('./routers/router');
 const app = express();
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
 app.use('/', router);
+
+app.get('/healthcheck', (req,res) => {
+    res.status(200).json({
+        msg : 'Está tudo funcionando'
+    })
+})
 
 sequelize.authenticate()
 .then(async () => {
@@ -16,10 +22,10 @@ sequelize.authenticate()
     await sequelize.sync()
 }).then(() => {
     app.listen(PORT, () => {
-        console.log(`Running in port ${PORT}`)
+        console.log(`Rodando na porta ${PORT}`)
     })
 })
 .catch((err) => {
-    console.log("Error in connecting to the database", err)
+    console.log("Erro ao conectar com o banco de dados", err)
 })
 

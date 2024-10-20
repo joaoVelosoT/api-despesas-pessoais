@@ -1,48 +1,48 @@
 const { where } = require("sequelize");
-const Transicao = require("../models/Transicao");
+const Transacao = require("../models/Transacao");
 
-const TransicaoService = {
+const TransacaoService = {
     create : async (data) => {
         try {
-            return await Transicao.create(data);
+            return await Transacao.create(data);
         } catch (error) {
             console.error(error);
-            throw new Error("Erro ao criar a transicao");
+            throw new Error("Erro ao criar a transacao");
         }
     },
     getAll : async (id) => {
         try {
-            return await Transicao.findAll({where : {user_id : id}});
+            return await Transacao.findAll({where : {user_id : id}});
         } catch (error) {
             console.error(error);
-            throw new Error("Erro ao listar as transicoes");
+            throw new Error("Erro ao listar as transacoes");
         }
     },
     getOne : async (id, user_id) => {
         try {
 
-            const transicao = await Transicao.findOne({
+            const transacao = await Transacao.findOne({
                 where : { 
                     id : id,
                     user_id : user_id,
 
                 }
             });
-            console.log(transicao)
-            if(!transicao){
+            
+            if(!transacao){
                 return null
             }
 
-            return transicao
+            return transacao
         } catch (error) {
             console.error(error);
-            throw new Error("Erro ao listar uma transicao");
+            throw new Error("Erro ao listar uma transacao");
         }
     },
     update : async (id, data, user_id) => {
         try {
 
-            const transicao = await Transicao.findOne({
+            const transacao = await Transacao.findOne({
                 where : { 
                     id : id,
                     user_id : user_id,
@@ -50,31 +50,32 @@ const TransicaoService = {
                 }
             });
 
-            if(!transicao){
+            if(!transacao){
                 return null
             }
             
 
-            return await transicao.update(data)
+            return await transacao.update(data);
+
         } catch (error) {
             console.error(error);
-            throw new Error("Erro ao atualizar as transicoees");
+            throw new Error("Erro ao atualizar a transacao");
         }
     },
     delete : async (id) => {
         try {
 
-            const transicao = await Transicao.findByPk(id);
+            const transacao = await Transacao.findByPk(id);
 
-            if(!transicao){
+            if(!transacao){
                 return null
             }
 
-            return await transicao.destroy();
+            return await transacao.destroy();
 
         } catch (error) {
             console.error(error);
-            throw new Error("Erro ao deletar as transicoes");
+            throw new Error("Erro ao deletar as transacoes");
         }
     },
     total : async (id) => {
@@ -83,9 +84,9 @@ const TransicaoService = {
             let entradas = 0;
             let saidas = 0;
 
-            const transicoes = await Transicao.findAll({where : {user_id : id}});
+            const transacoes = await Transacao.findAll({where : {user_id : id}});
 
-            transicoes.forEach(transacao => {
+            transacoes.forEach(transacao => {
                 // let entrada = 0
                 // let saida = 0
                 if(transacao.tipo === "entrada"){
@@ -110,7 +111,7 @@ const TransicaoService = {
     },
     totalEntradas : async (id) => {
         try {
-            const transicoes = await Transicao.findAll({
+            const transacoes = await Transacao.findAll({
                 where : {
                     tipo : "Entrada",
                     user_id : id
@@ -118,7 +119,7 @@ const TransicaoService = {
             })
             let totalEntradas = 0;
 
-            transicoes.forEach(entradas => {
+            transacoes.forEach(entradas => {
                 totalEntradas += entradas.valor
             })
 
@@ -130,14 +131,16 @@ const TransicaoService = {
     },
     totalSaidas : async (user_id) => {
         try {
-            const transicoes = await Transicao.findAll({ 
+            const transacoes = await Transacao.findAll({ 
                 where : {
                     tipo : "Saida",
                     user_id : user_id,
                 }
             });
+
             let totalSaidas = 0;
-            transicoes.forEach(saidas => {
+
+            transacoes.forEach(saidas => {
                 totalSaidas += saidas.valor
             })
             return totalSaidas
@@ -150,7 +153,7 @@ const TransicaoService = {
     todasTransacoes : async (user_id) => {
         try {
             
-            return await Transicao.findAll({where : { user_id : user_id}});
+            return await Transacao.findAll({where : { user_id : user_id}});
 
             
         } catch (error) {
@@ -161,7 +164,7 @@ const TransicaoService = {
     todasEntradas : async (user_id) => {
         try {
             
-            return await Transicao.findAll({
+            return await Transacao.findAll({
                 where : {
                     user_id : user_id,
                     tipo : 'entrada'
@@ -177,7 +180,7 @@ const TransicaoService = {
     todasSaidas : async (user_id) => {
         try {
             
-            return await Transicao.findAll({
+            return await Transacao.findAll({
                 where : {
                     user_id : user_id,
                     tipo : 'saida'
@@ -192,4 +195,4 @@ const TransicaoService = {
     }
 }
 
-module.exports = TransicaoService;
+module.exports = TransacaoService;
