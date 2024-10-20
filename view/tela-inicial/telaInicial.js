@@ -135,6 +135,60 @@ const transacao = async () => {
   })
 }
 
+const todasTransferencias = async () => {
+  try {
+
+    const historico = document.getElementById("transaction-history");
+    const token = sessionStorage.getItem("token");
+    const tipo = document.getElementById("filter-type");
+
+    addEventListener('change', async(e) => {
+
+      const tipo = tipo.value
+      console.log(tipo.value)
+    
+      const response = await fetch(url, {
+        method : 'GET',
+        headers: {
+          Authorization: `${token}`,
+          // "Content-Type": "application/json; charset=UTF-8"
+         },
+      })
+      const json = await response.json();
+      const transferencias = json.transacoes;
+      transferencias.forEach(element => {
+        console.log(element);
+        historico.innerHTML += `<li class="transaction ${element.tipo}">
+                      <span>${element.descricao}</span>
+                      <span class="amount">R$ 2500,00</span>
+                  </li>`
+      });
+    
+    })
+
+    const response = await fetch('http://localhost:3000/transicao/todastransferencias', {
+      method : 'GET',
+      headers: {
+        Authorization: `${token}`,
+        // "Content-Type": "application/json; charset=UTF-8"
+       },
+    })
+    const json = await response.json();
+    const transferencias = json.transacoes;
+    transferencias.forEach(element => {
+      console.log(element);
+      historico.innerHTML += `<li class="transaction ${element.tipo}">
+                    <span>${element.descricao}</span>
+                    <span class="amount">R$ 2500,00</span>
+                </li>`
+    });
+
+
+    
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 
 
@@ -144,3 +198,4 @@ logout();
 saldoTotal();
 totalEntradas();
 totalSaidas();
+todasTransferencias();
