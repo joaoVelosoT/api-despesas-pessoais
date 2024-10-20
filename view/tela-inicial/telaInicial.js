@@ -117,11 +117,13 @@ const transacao = async () => {
 
       const json = await response.json();
 
-      saldoTotal();
-      totalEntradas();
-      totalSaidas();
-      todasTransferencias();
-      alert("Transação feita com sucesso !");
+      // saldoTotal();
+      // totalEntradas();
+      // totalSaidas();
+      // // todasTransferencias();
+      
+      // alert("Transação feita com sucesso !");
+      window.location.reload()
       valor.value = "";
       descricao.value = "";
     } catch (error) {

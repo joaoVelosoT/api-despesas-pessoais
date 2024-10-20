@@ -9,8 +9,9 @@ body {
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* height: 100vh; */
 }
 
 .dashboard-container {
@@ -31,7 +32,7 @@ header {
     display: flex;
     justify-content: space-between; /* Alinha o título e o botão de logout */
     align-items: center;
-    margin-top: 350px;
+    /* margin-top: 350px; */
     margin-bottom: 20px;
     width: 100%;
 

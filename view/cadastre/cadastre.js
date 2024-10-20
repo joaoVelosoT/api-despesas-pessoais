@@ -64,6 +64,9 @@ form.addEventListener('submit', async (e) => {
     // console.log(json)
     } catch (error) {
         console.log(error);
+        alert("Erro interno !")
+        msgError.textContent = "Erro interno !"
+        msgError.style.display = "block"
     }
     // console.log(data)
 })
