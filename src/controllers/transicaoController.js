@@ -172,7 +172,60 @@ const TransicaoController = {
                 msg : "Erro ao listar o total de saidas"
             })
         }
+    },
+    todasTransacoes : async (req,res) => {
+        try {
+            
+            const transacoes = await TransicaoService.todasTransacoes(req.user.id);
+
+            return res.status(200).json({
+                msg : "Todas as transacoes",
+                transacoes
+            })
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                msg : "Erro ao listar todas as transacoes"
+            })
+        }
+    },
+    todasEntradas : async(req,res) => {
+        try {
+            
+            const entradas = await TransicaoService.todasEntradas(req.user.id);
+
+            return res.status(200).json({
+                msg : "Todas as entradas",
+                entradas
+            })
+
+
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                msg : "Erro ao listar todas as entradas"
+            })
+        }
+    },
+    todasSaidas : async (req,res) => {
+        try {
+            const saidas = await TransicaoService.todasSaidas(req.user.id);
+
+            return res.status(200).json({
+                msg : "Todas as saidas",
+                saidas
+            })
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                msg : "Erro ao listar todas as saidas"
+            })
+        }
     }
+    
+
 
     
 }

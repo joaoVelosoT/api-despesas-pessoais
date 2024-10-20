@@ -28,7 +28,6 @@ form.addEventListener('submit', async (e) => {
     })
 
     const json = await response.json();
-    // if(json.)
 
     if(json.msg === "Login bem sucedido"){
         sessionStorage.setItem("token", json.user)

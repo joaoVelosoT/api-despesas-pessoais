@@ -146,6 +146,49 @@ const TransicaoService = {
             throw new Error("Erro ao mostrar o total de saidas");
             
         }
+    },
+    todasTransacoes : async (user_id) => {
+        try {
+            
+            return await Transicao.findAll({where : { user_id : user_id}});
+
+            
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro ao mostrar todas as transacoes");
+        }
+    },
+    todasEntradas : async (user_id) => {
+        try {
+            
+            return await Transicao.findAll({
+                where : {
+                    user_id : user_id,
+                    tipo : 'entrada'
+                }
+        })
+
+
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro ao mostrar todas as entradas");
+        }
+    },
+    todasSaidas : async (user_id) => {
+        try {
+            
+            return await Transicao.findAll({
+                where : {
+                    user_id : user_id,
+                    tipo : 'saida'
+                }
+        })
+
+        
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro ao mostrar todas as saidas");
+        }
     }
 }
 

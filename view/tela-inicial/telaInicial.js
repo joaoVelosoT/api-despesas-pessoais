@@ -137,6 +137,8 @@ const transacao = async () => {
 
 
 
+
+
 transacao();
 logout();
 saldoTotal();

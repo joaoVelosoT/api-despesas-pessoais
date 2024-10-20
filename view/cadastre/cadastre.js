@@ -38,7 +38,30 @@ form.addEventListener('submit', async (e) => {
 
     const json = await response.json();
 
-    console.log(json)
+    // if(json.msg === "User criado com sucesso"){
+    //     sessionStorage.setItem("token", json.user)
+    //     return window.location.href = '../tela-inicial/telaInicial.html'
+    // }
+
+
+    const responseLogin = await fetch('http://localhost:3000/user/login', {
+        method : 'POST',
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body : data
+    })
+
+
+    const jsonLogin = await responseLogin.json();
+
+    if(jsonLogin.msg === "Login bem sucedido"){
+        sessionStorage.setItem("token", jsonLogin.user)
+        return window.location.href = '../tela-inicial/telaInicial.html'
+    }
+
+    msgError.textContent = jsonLogin.msg
+    msgError.style.display = "block"
+
+    // console.log(json)
     } catch (error) {
         console.log(error);
     }

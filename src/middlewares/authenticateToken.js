@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req,res,next) => {
-    const token = req.headers.authorization
+    try {
+        const token = req.headers.authorization
     if(!token){
         return res.status(400).json({
             msg : "Acesso negado"
@@ -19,6 +20,13 @@ const authenticateToken = (req,res,next) => {
     })
     // console.log(token);
     return next();
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            msg : "Erro, contate o suporte"
+        })
+        
+    }
 }
 
 

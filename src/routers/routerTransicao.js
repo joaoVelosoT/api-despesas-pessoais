@@ -8,6 +8,12 @@ router.get('/total',authenticateToken, TransicaoController.total);
 router.get('/entradas',authenticateToken, TransicaoController.totalEntradas);
 router.get('/saidas', authenticateToken, TransicaoController.totalSaidas );
 
+router.get('/todastransferencias',authenticateToken, TransicaoController.todasTransacoes);
+router.get('/todasentradas',authenticateToken, TransicaoController.todasEntradas);
+router.get('/todassaidas',authenticateToken, TransicaoController.todasSaidas);
+
+
+
 router.post('/',authenticateToken, validateTransacao, TransicaoController.create);
 router.get('/', authenticateToken, TransicaoController.getAll);
 router.get('/:id',authenticateToken, TransicaoController.getOne);
