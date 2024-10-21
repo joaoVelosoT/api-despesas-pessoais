@@ -148,6 +148,7 @@ button:hover {
     border-radius: 5px;
     margin-bottom: 10px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -180,3 +181,8 @@ button:hover {
     display: none; 
 }
 
+#btn-delete {
+    width: 100px;
+    background-color: red;
+    /* margin-left: 30px; */
+}

@@ -121,9 +121,9 @@ const transacao = async () => {
       // totalEntradas();
       // totalSaidas();
       // // todasTransferencias();
-      
+
       // alert("Transação feita com sucesso !");
-      window.location.reload()
+      window.location.reload();
       valor.value = "";
       descricao.value = "";
     } catch (error) {
@@ -134,11 +134,10 @@ const transacao = async () => {
 
 const todasTransferencias = async () => {
   try {
-
     // Selecionando o elemento container no HTML
     const historico = document.getElementById("transaction-history");
 
-    historico.innerHTML = ""
+    historico.innerHTML = "";
     // Pegando o token no sessionStorage
     const token = sessionStorage.getItem("token");
 
@@ -165,8 +164,12 @@ const todasTransferencias = async () => {
       historico.innerHTML += `<li class="transaction ${element.tipo}">
                       <span>${element.descricao}</span>
                       <span class="amount">R$ ${element.valor}</span>
+                      <button id="btn-delete" class="btn-delete">delete</button>
+
                   </li>`;
     });
+
+    btnDeleteFunc();
 
     // Adicionando o evento no input de tipo
     tipo.addEventListener("change", async (e) => {
@@ -191,12 +194,13 @@ const todasTransferencias = async () => {
             historico.innerHTML += `<li class="transaction ${element.tipo}">
                             <span>${element.descricao}</span>
                             <span class="amount">R$ ${element.valor}</span>
+                      <button id="btn-delete" class="btn-delete">delete</button>
+
                         </li>`;
           });
 
           break;
         case "saida":
-
           // Limpando o HTML
           historico.innerHTML = "";
 
@@ -218,6 +222,8 @@ const todasTransferencias = async () => {
             historico.innerHTML += `<li class="transaction ${element.tipo}">
                             <span>${element.descricao}</span>
                             <span class="amount">R$ ${element.valor}</span>
+                      <button id="btn-delete" class="btn-delete">delete</button>
+
                         </li>`;
           });
           break;
@@ -245,6 +251,8 @@ const todasTransferencias = async () => {
             historico.innerHTML += `<li class="transaction ${element.tipo}">
                       <span>${element.descricao}</span>
                       <span class="amount">R$ ${element.valor}</span>
+                      <button id="btn-delete" class="btn-delete">delete</button>
+
                   </li>`;
           });
 
@@ -256,9 +264,38 @@ const todasTransferencias = async () => {
   }
 };
 
+const btnDeleteFunc = async () => {
+  const btnDelete = document.querySelectorAll('.btn-delete')
+
+  console.log(btnDelete);
+
+  
+  btnDelete.forEach((delTransacao) => {
+    delTransacao.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log(delTransacao)
+
+    })
+  })
+  // for(let i = 0; i < btnDelete.length; i++) {
+  //   const element = btnDelete[i];
+
+  //   element.addEventListener('click', (e) => {
+  //     e.preventDefault();
+  //     console.log("clicou no", element)
+  //   })
+  //   // console.log(element);
+  // }
+
+}
+
+
 transacao();
 logout();
 saldoTotal();
 totalEntradas();
 totalSaidas();
 todasTransferencias();
+
+// btnDelete();
+
