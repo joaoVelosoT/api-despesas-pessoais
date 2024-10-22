@@ -169,7 +169,7 @@ const TransacaoController = {
       return res.status(200).json({
         msg: "Todas as transacoes",
         transacoes,
-      });
+      }); 
     } catch (error) {
       console.error(error);
       return res.status(500).json({

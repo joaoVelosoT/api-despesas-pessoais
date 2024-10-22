@@ -30,10 +30,15 @@ const saldoTotal = async () => {
     });
 
     const json = await response.json();
+    if(json.msg === "Acesso negado"){
+      window.location.href = '../login/login.html'
+    }
     saldoTotal.innerText = `R$${json.total}`;
-    // console.log(json.total)
+    
   } catch (error) {
+    console.log("caiu no erro do saldoTotal")
     console.error(error);
+    return null
   }
 };
 
@@ -48,6 +53,9 @@ const totalEntradas = async () => {
     });
 
     const json = await response.json();
+    if(json.msg === "Acesso negado"){
+      window.location.href = '../login/login.html'
+    }
     // console.log(json)
     totalEntradas.innerText = `R$${json.totalEntradas}`;
   } catch (error) {
@@ -66,6 +74,9 @@ const totalSaidas = async () => {
     });
 
     const json = await response.json();
+    if(json.msg === "Acesso negado"){
+      window.location.href = '../login/login.html'
+    }
     console.log(json);
     totalSaidas.innerText = `R$${json.totalSaidas}`;
   } catch (error) {
@@ -116,7 +127,9 @@ const transacao = async () => {
       });
 
       const json = await response.json();
-
+      if(json.msg === "Acesso negado"){
+        window.location.href = '../login/login.html'
+      }
       // saldoTotal();
       // totalEntradas();
       // totalSaidas();
@@ -156,12 +169,16 @@ const todasTransferencias = async () => {
     // Pegando o retorno do fetch, e convertendo para um json
     const json = await response.json();
 
+    if(json.msg === "Acesso negado"){
+      window.location.href = '../login/login.html'
+    }
+
     // Selecionando apenas as transacoes do fetch
     const transacoes = json.transacoes;
 
     // Fazendo o forEach para jogar as transacoes no HTML
     transacoes.forEach((element) => {
-      historico.innerHTML += `<li class="transaction ${element.tipo}">
+      historico.innerHTML += `<li class="transaction ${element.tipo}" id=${element.id}>
                       <span>${element.descricao}</span>
                       <span class="amount">R$ ${element.valor}</span>
                       <button id="btn-delete" class="btn-delete">delete</button>
@@ -187,17 +204,22 @@ const todasTransferencias = async () => {
           );
 
           const json = await response.json();
-          // console.log(json)
+          
+          if(json.msg === "Acesso negado"){
+            window.location.href = '../login/login.html'
+          }
+
           const transacoes = json.entradas;
 
           transacoes.forEach((element) => {
-            historico.innerHTML += `<li class="transaction ${element.tipo}">
+            historico.innerHTML += `<li class="transaction ${element.tipo}" id=${element.id}>
                             <span>${element.descricao}</span>
                             <span class="amount">R$ ${element.valor}</span>
                       <button id="btn-delete" class="btn-delete">delete</button>
 
                         </li>`;
           });
+    btnDeleteFunc();
 
           break;
         case "saida":
@@ -219,13 +241,15 @@ const todasTransferencias = async () => {
           const transacoesSaida = jsonSaida.saidas;
           console.log(transacoesSaida);
           transacoesSaida.forEach((element) => {
-            historico.innerHTML += `<li class="transaction ${element.tipo}">
+            historico.innerHTML += `<li class="transaction ${element.tipo}" id=${element.id}>
                             <span>${element.descricao}</span>
                             <span class="amount">R$ ${element.valor}</span>
                       <button id="btn-delete" class="btn-delete">delete</button>
 
                         </li>`;
           });
+    btnDeleteFunc();
+
           break;
         case "todos":
           // Limpando o HTML
@@ -248,13 +272,14 @@ const todasTransferencias = async () => {
 
           // Fazendo o forEach para jogar as transacoes no HTML
           todasTransferencias.forEach((element) => {
-            historico.innerHTML += `<li class="transaction ${element.tipo}">
+            historico.innerHTML += `<li class="transaction ${element.tipo}" id=${element.id}>
                       <span>${element.descricao}</span>
                       <span class="amount">R$ ${element.valor}</span>
                       <button id="btn-delete" class="btn-delete">delete</button>
 
                   </li>`;
           });
+          btnDeleteFunc();
 
           break;
       }
@@ -266,26 +291,38 @@ const todasTransferencias = async () => {
 
 const btnDeleteFunc = async () => {
   const btnDelete = document.querySelectorAll('.btn-delete')
-
+  const token = sessionStorage.getItem("token")
   console.log(btnDelete);
 
   
   btnDelete.forEach((delTransacao) => {
-    delTransacao.addEventListener('click', (e) => {
+    delTransacao.addEventListener('click', async(e) => {
       e.preventDefault();
-      console.log(delTransacao)
+      const id = delTransacao.parentElement.id
+
+      try {
+        const response = await fetch(`http://localhost:3000/transicao/${id}`, {
+          method : 'DELETE',
+          headers: { Authorization: `${token}` }
+        })
+  
+        const json = await response.json();
+
+        if(json.msg === "Acesso negado"){
+          window.location.href = '../login/login.html'
+        }
+
+        console.log(json);
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+      
+      
 
     })
   })
-  // for(let i = 0; i < btnDelete.length; i++) {
-  //   const element = btnDelete[i];
 
-  //   element.addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     console.log("clicou no", element)
-  //   })
-  //   // console.log(element);
-  // }
 
 }
 
