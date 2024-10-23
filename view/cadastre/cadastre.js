@@ -37,7 +37,13 @@ form.addEventListener('submit', async (e) => {
     })
 
     const json = await response.json();
-
+    console.log(json);
+    if(json.msg === 'Já existe esse email'){
+        msgError.textContent = 'Email já cadastrado. Por favor use outro'
+        msgError.style.display = "block"
+        return null
+    }
+    
     // if(json.msg === "User criado com sucesso"){
     //     sessionStorage.setItem("token", json.user)
     //     return window.location.href = '../tela-inicial/telaInicial.html'
