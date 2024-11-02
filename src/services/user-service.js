@@ -1,10 +1,12 @@
-const User = require("../models/User");
+// const User = require("../models/User");
 const jwt = require('jsonwebtoken');
-
+const User = require('../models/User')
 const UserService = {
     create : async(data) => {
         try {
-            const existeUser = await User.findOne({ where : {email : data.email}});
+            // const existeUser = await User.findOne({ where : {email : data.email}});
+            const existeUser = await User.findOne().where('email').equals(data.email);
+            
             if(existeUser){
                 return null;
             }
@@ -17,7 +19,7 @@ const UserService = {
     },
     getAll : async() => {
         try {
-            return await User.findAll();
+            return await User.find();
 
         } catch (error) {
             console.error(error);
@@ -26,7 +28,10 @@ const UserService = {
     },
     getOne : async(id) => {
         try {
-            const user = await User.findByPk(id);
+            if(id.length < 24 || id.length > 24){
+                return null
+            }
+            const user = await User.findById(id);
             if(!user){
                 return null
             }
@@ -38,13 +43,17 @@ const UserService = {
     },
     update : async(id,data) => {
         try {
-            const user = await User.findByPk(id);
+
+            if(id.length < 24 || id.length > 24){
+                return null
+            }
+            const user = await User.findById(id);
 
             if(!user){
                 return null
             }
 
-            return await user.update(data);
+            return await user.updateOne(data);
         } catch (error) {
             console.error(error);
             throw new Error("Erro ao atualizar user");
@@ -52,13 +61,18 @@ const UserService = {
     },
     delete : async(id) => {
         try {
-            const user = await User.findByPk(id);
+
+            if(id.length < 24 || id.length > 24){
+                return null
+            }
+
+            const user = await User.findById(id);
 
             if(!user){
                 return null
             }
 
-            return await user.destroy();
+            return await user.deleteOne();
         } catch (error) {
             console.error(error);
             throw new Error("Erro ao deletar user");
@@ -66,18 +80,28 @@ const UserService = {
     },
     login : async (data) => {
         try {
+
+            // const user = await User.findOne({
+            //     where : {
+            //         email : data.email,
+            //         senha : data.senha
+            //     }
+            // });
+
             const user = await User.findOne({
-                where : {
-                    email : data.email,
-                    senha : data.senha
-                }
-            });
+                email : data.email,
+                senha : data.senha
+            })
+            // const user = await User.findOne().where('email').equals(data.email)
+            console.log(user);
+
+
 
             if(!user){
                 return null
             }
             const token = jwt.sign({
-                id : user.id,
+                id : user._id,
                 nome : user.nome
             }, process.env.SECRET, { expiresIn : "1h"});
 

@@ -3,7 +3,7 @@ const TransacaoService = require("../services/transacao-service");
 const TransacaoController = {
   create: async (req, res) => {
     try {
-      console.log(req.user);
+      console.log("req user aqaui", req.user);
 
       const data = {
         valor: req.body.valor,

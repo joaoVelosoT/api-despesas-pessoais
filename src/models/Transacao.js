@@ -1,36 +1,62 @@
-const {DataTypes} = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./User');
+const mongoose = require('mongoose');
 
-const Transacao = sequelize.define("transacao", {
+const Schema = mongoose.Schema;
+const transacaoSchema = new Schema({
     valor : {
-        type : DataTypes.DOUBLE,
-        allowNull : false
+        type : Number,
+        required : true
     },
     descricao : {
-        type : DataTypes.STRING(255)
+        type : String
     },
     tipo : {
-        type : DataTypes.STRING,
-        allowNull : false
+        type : String,
+        required : true
     },
-    // user_id : {
-    //     type : DataTypes.INTEGER,
-    //     references : {
-    //         model
-    //     }
-    //     onDelete : 'CASCADE',
-    //     allowNull : false
-    // }
+    user_id : {
+        type : String,
+        required : true
+    }
 })
-
-Transacao.belongsTo(User, {
-    foreignKey : 'user_id',
-    onDelete : 'CASCADE',
-    allowNull : false
-})
-
-
-
-
+const Transacao = mongoose.model('Transacao', transacaoSchema);
 module.exports = Transacao;
+
+
+
+
+// const {DataTypes} = require('sequelize');
+// const sequelize = require('../config/database');
+// const User = require('./User');
+
+// const Transacao = sequelize.define("transacao", {
+//     valor : {
+//         type : DataTypes.DOUBLE,
+//         allowNull : false
+//     },
+//     descricao : {
+//         type : DataTypes.STRING(255)
+//     },
+//     tipo : {
+//         type : DataTypes.STRING,
+//         allowNull : false
+//     },
+//     // user_id : {
+//     //     type : DataTypes.INTEGER,
+//     //     references : {
+//     //         model
+//     //     }
+//     //     onDelete : 'CASCADE',
+//     //     allowNull : false
+//     // }
+// })
+
+// Transacao.belongsTo(User, {
+//     foreignKey : 'user_id',
+//     onDelete : 'CASCADE',
+//     allowNull : false
+// })
+
+
+
+
+// module.exports = Transacao;

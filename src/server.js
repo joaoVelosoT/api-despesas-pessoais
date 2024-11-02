@@ -1,6 +1,7 @@
 require('dotenv').config
 const express = require('express');
-const sequelize = require('./config/database');
+// const sequelize = require('./config/database');
+const database = require('./config/database');
 const router = require('./routers/router');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,16 +17,17 @@ app.get('/healthcheck', (req,res) => {
     })
 })
 
-sequelize.authenticate()
-.then(async () => {
-    console.log("Conexão com o banco de dados bem sucedida");
-    await sequelize.sync()
-}).then(() => {
-    app.listen(PORT, () => {
-        console.log(`Rodando na porta ${PORT}`)
-    })
-})
-.catch((err) => {
-    console.log("Erro ao conectar com o banco de dados", err)
+app.listen(PORT, async () => {
+    try {
+        await database();
+        console.log("db conectado")
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("------------------------------------")
+    console.log("servidor no ar");
+    console.log("------------------------------------")
+    
 })
 

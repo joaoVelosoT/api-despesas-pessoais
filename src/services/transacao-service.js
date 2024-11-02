@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+// const { where } = require("sequelize");
 const Transacao = require("../models/Transacao");
 
 const TransacaoService = {
@@ -12,7 +12,7 @@ const TransacaoService = {
     },
     getAll : async (id) => {
         try {
-            return await Transacao.findAll({where : {user_id : id}});
+            return await Transacao.find({user_id : id});
         } catch (error) {
             console.error(error);
             throw new Error("Erro ao listar as transacoes");
@@ -22,11 +22,8 @@ const TransacaoService = {
         try {
 
             const transacao = await Transacao.findOne({
-                where : { 
                     id : id,
                     user_id : user_id,
-
-                }
             });
             
             if(!transacao){
