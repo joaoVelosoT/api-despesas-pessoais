@@ -86,7 +86,7 @@ const TransacaoService = {
             transacoes.forEach(transacao => {
                 // let entrada = 0
                 // let saida = 0
-                if(transacao.tipo === "entrada"){
+                if(transacao.tipo === "Entrada"){
                     entradas += transacao.valor
                 }else {
                     saidas += transacao.valor
@@ -109,7 +109,6 @@ const TransacaoService = {
     totalEntradas : async (id) => {
         try {
             const transacoes = await Transacao.find({
-               
                     tipo : "Entrada",
                     user_id : id
                 
@@ -164,7 +163,7 @@ const TransacaoService = {
             return await Transacao.find({
                 
                     user_id : user_id,
-                    tipo : 'entrada'
+                    tipo : 'Entrada'
                 
         })
 
@@ -180,7 +179,7 @@ const TransacaoService = {
             return await Transacao.find({
                 
                     user_id : user_id,
-                    tipo : 'saida'
+                    tipo : 'Saida'
                 
         })
 
