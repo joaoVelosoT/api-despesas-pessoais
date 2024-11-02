@@ -22,10 +22,10 @@ const TransacaoService = {
         try {
 
             const transacao = await Transacao.findOne({
-                    id : id,
+                    _id : id,
                     user_id : user_id,
             });
-            
+
             if(!transacao){
                 return null
             }
@@ -40,11 +40,11 @@ const TransacaoService = {
         try {
 
             const transacao = await Transacao.findOne({
-                where : { 
-                    id : id,
+                
+                    _id : id,
                     user_id : user_id,
 
-                }
+                
             });
 
             if(!transacao){
@@ -52,7 +52,7 @@ const TransacaoService = {
             }
             
 
-            return await transacao.update(data);
+            return await transacao.updateOne(data);
 
         } catch (error) {
             console.error(error);
@@ -62,13 +62,13 @@ const TransacaoService = {
     delete : async (id) => {
         try {
 
-            const transacao = await Transacao.findByPk(id);
+            const transacao = await Transacao.findById(id);
 
             if(!transacao){
                 return null
             }
 
-            return await transacao.destroy();
+            return await transacao.deleteOne();
 
         } catch (error) {
             console.error(error);
@@ -81,7 +81,7 @@ const TransacaoService = {
             let entradas = 0;
             let saidas = 0;
 
-            const transacoes = await Transacao.findAll({where : {user_id : id}});
+            const transacoes = await Transacao.find({user_id : id});
 
             transacoes.forEach(transacao => {
                 // let entrada = 0
@@ -108,11 +108,11 @@ const TransacaoService = {
     },
     totalEntradas : async (id) => {
         try {
-            const transacoes = await Transacao.findAll({
-                where : {
+            const transacoes = await Transacao.find({
+               
                     tipo : "Entrada",
                     user_id : id
-                }
+                
             })
             let totalEntradas = 0;
 
@@ -128,11 +128,11 @@ const TransacaoService = {
     },
     totalSaidas : async (user_id) => {
         try {
-            const transacoes = await Transacao.findAll({ 
-                where : {
+            const transacoes = await Transacao.find({ 
+                
                     tipo : "Saida",
                     user_id : user_id,
-                }
+                
             });
 
             let totalSaidas = 0;
@@ -150,7 +150,7 @@ const TransacaoService = {
     todasTransacoes : async (user_id) => {
         try {
             
-            return await Transacao.findAll({where : { user_id : user_id}});
+            return await Transacao.find({user_id : user_id});
 
             
         } catch (error) {
@@ -161,11 +161,11 @@ const TransacaoService = {
     todasEntradas : async (user_id) => {
         try {
             
-            return await Transacao.findAll({
-                where : {
+            return await Transacao.find({
+                
                     user_id : user_id,
                     tipo : 'entrada'
-                }
+                
         })
 
 
@@ -177,11 +177,11 @@ const TransacaoService = {
     todasSaidas : async (user_id) => {
         try {
             
-            return await Transacao.findAll({
-                where : {
+            return await Transacao.find({
+                
                     user_id : user_id,
                     tipo : 'saida'
-                }
+                
         })
 
         
