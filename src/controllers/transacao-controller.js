@@ -3,8 +3,6 @@ const TransacaoService = require("../services/transacao-service");
 const TransacaoController = {
   create: async (req, res) => {
     try {
-      console.log("req user aqaui", req.user);
-
       const data = {
         valor: req.body.valor,
         descricao: req.body.descricao,
@@ -47,7 +45,7 @@ const TransacaoController = {
       const transacao = await TransacaoService.getOne(id, user_id);
 
       if (!transacao) {
-        return res.status(400).json({
+        return res.status(404).json({
           msg: "Transacao não encontrada",
         });
       }
@@ -78,7 +76,7 @@ const TransacaoController = {
       const transacao = await TransacaoService.update(id, data, user_id);
 
       if (!transacao) {
-        return res.status(400).json({
+        return res.status(404).json({
           msg: "Transacao não encontrada",
         });
       }
@@ -101,7 +99,7 @@ const TransacaoController = {
       const transacao = await TransacaoService.delete(id);
 
       if (!transacao) {
-        return res.status(400).json({
+        return res.status(404).json({
           msg: "Transacao não encontrada",
         });
       }
@@ -169,7 +167,7 @@ const TransacaoController = {
       return res.status(200).json({
         msg: "Todas as transacoes",
         transacoes,
-      }); 
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json({

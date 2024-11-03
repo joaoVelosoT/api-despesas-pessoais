@@ -12,11 +12,10 @@ const authenticateToken = (req, res, next) => {
     jwt.verify(token, process.env.SECRET, (err, user) => {
       if (err) {
         return res.status(400).json({
-          msg: "Acesso negado"
+          msg: "Acesso negado",
         });
       }
       req.user = user;
-      // console.log(user)
       return next();
     });
   } catch (error) {
