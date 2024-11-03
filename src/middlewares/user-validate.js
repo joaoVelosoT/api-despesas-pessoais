@@ -20,10 +20,6 @@ const validateUser = (req,res,next) => {
         })
     }
 
-    console.log(req.body)
-
-    console.log(nome, email, senha)
-
     if(!nome || !email || !senha){
         return res.status(400).json({
             msg : "Valide seus dados"

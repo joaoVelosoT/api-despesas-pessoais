@@ -1,8 +1,7 @@
 
 # Projeto Despesas Pessoais
 
-Este projeto consiste em um sistema simples de gerenciamento de despesas pessoais, permitindo que o usuário adicione e exclua transações. No dashboard, o usuário pode visualizar o total de entradas, saídas e o saldo disponível de forma clara e organizada.
-
+Este projeto consiste em um sistema simples de gerenciamento de despesas pessoais, permitindo que o usuário adicione e exclua transações.
 
 ## Rodando localmente
 
@@ -37,19 +36,13 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 
 `PORT`
 
-`DB_NAME`
+`HOST_DB`
 
-`DB_HOST`
+`PASS_DB`
 
-`DB_USER`
-
-`DB_PASSWORD`
+`URL_DB`
 
 `SECRET`
-
-
-
-
 
 # Documentação da API
 
